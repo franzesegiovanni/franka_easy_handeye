@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- (start your robot's MoveIt! stack, e.g. include its moveit_planning_execution.launch) -->
+  <!-- (start your tracking system's ROS driver) -->
+
+  <include file="$(find easy_handeye)/launch/calibrate.launch">
+    <arg name="eye_on_hand" value="true"/>
+    
+    <arg name="freehand_robot_movement" value="true" />
+
+    <!-- you can choose any identifier, as long as you use the same for publishing the calibration -->
+    <arg name="namespace_prefix" value="my_eih_calib"/>
+
+    <!-- fill in the following parameters according to your robot's published tf frames -->
+    <arg name="robot_base_frame" value="panda_link0"/>
+    <arg name="robot_effector_frame" value="panda_hand"/>
+
+    <!-- fill in the following parameters according to your tracking system's published tf frames -->
+    <arg name="tracking_base_frame" value="camera_color_optical_frame"/>
+    <arg name="tracking_marker_frame" value="marker"/>
+  </include>
+</launch>
