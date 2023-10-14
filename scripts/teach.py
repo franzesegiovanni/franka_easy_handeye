@@ -39,11 +39,14 @@ class Teach(Panda):
         self.recorded_traj = self.curr_pos
         self.recorded_ori = self.curr_ori
         self.end=False
+        print('Adding cartesian position') 
+        print('Recorded points: ', self.recorded_traj.shape[1])
         while not(self.end):       
             if  self.save_cartesian_position==True: 
                 self.recorded_traj = np.c_[self.recorded_traj, self.curr_pos]
                 self.recorded_ori = np.c_[self.recorded_ori, self.curr_ori]
                 print('Adding cartesian position') 
+                print('Recorded points: ', self.recorded_traj.shape[1])
                 time.sleep(0.1)
                 self.save_cartesian_position=False     
 
@@ -64,6 +67,7 @@ class Teach(Panda):
     def execute_cart_points(self):
         self.set_stiffness(600.0, 600.0, 600.0, 30.0, 30.0, 30.0, 0.0)
         for i in range (self.recorded_traj.shape[1]):
+            print('Going to point number : ', i+1)
             goal = PoseStamped()
 
             goal.header.seq = 1
@@ -80,9 +84,6 @@ class Teach(Panda):
             goal.pose.orientation.w = self.recorded_ori[3,i]
 
             self.goal_pub.publish(goal)
-            
-            grip_command = Float32()
-            grip_command.data = self.recorded_gripper[0,i]
 
             time.sleep(2)
             self.take_sample_pub.publish(Empty())
