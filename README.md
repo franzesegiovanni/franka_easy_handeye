@@ -1,4 +1,4 @@
-# franka_easy_handeye
+# Easy hand eye calibration for panda/fr3 and realsense camera
 Movit free hand eye calibration for panda and fr3. 
 
 I have tested the code using ROS noetic, a real panda robot and a realsense d435 camera.
@@ -35,3 +35,18 @@ Run the controller before starting the calibration
 ``` bash
   roslaunch franka_easy_handeye easy.launch  
 ```
+
+# Record trajectrories in python
+``` bash
+  roscd franka_easy_handeye/scripts
+  python record_calibration_trajectories.py  
+```
+# Run the calibration in python
+``` bash
+  roscd franka_easy_handeye/scripts
+  python execute_calibration.py
+```
+After the trajectory is over, remeber to compute the transformation on the rqt gui.
+
+# Limitations
+The calibration was tested only with panda with realsense camera on the wrist. 

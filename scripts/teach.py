@@ -88,3 +88,5 @@ class Teach(Panda):
             time.sleep(2)
             self.take_sample_pub.publish(Empty())
             time.sleep(2) 
+        
+        print('End of recorded calibration points')
