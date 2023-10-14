@@ -18,7 +18,8 @@ I am using the apriltag library to detect the apriltag in the camera image.
   mkdir src
   cd src 
   git clone https://github.com/AprilRobotics/apriltag.git  
-  git clone https://github.com/AprilRobotics/apriltag_ros.git                          
+  git clone https://github.com/AprilRobotics/apriltag_ros.git 
+  git clone https://github.com/IFL-CAMP/easy_handeye.git                         
   git clone https://github.com/franzesegiovanni/franka_easy_handeye.git  
   cd ..   
   catkin build 
@@ -26,5 +27,5 @@ I am using the apriltag library to detect the apriltag in the camera image.
 ```
 # Run the calibration
 ``` bash
-  roslaunch franka_easy_handeye handeye_calibration.launch  
+  roslaunch franka_easy_handeye easy.launch  
 ```
