@@ -20,8 +20,7 @@ I am using the apriltag library to detect the apriltag in the camera image.
   git clone https://github.com/AprilRobotics/apriltag.git  
   git clone https://github.com/AprilRobotics/apriltag_ros.git                          
   git clone https://github.com/franzesegiovanni/franka_easy_handeye.git  
-  cd ..  
-  rosdep install --from-paths src --ignore-src -r -y 
+  cd ..   
   catkin build 
   source devel/setup.bash  
 ```
