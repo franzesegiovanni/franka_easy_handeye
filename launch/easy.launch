@@ -5,8 +5,8 @@
 
   <include file="$(find easy_handeye)/launch/calibrate.launch">
     <arg name="eye_on_hand" value="true"/>
-    
     <arg name="freehand_robot_movement" value="true" />
+    <arg name="start_rviz" value="false" />
 
     <!-- you can choose any identifier, as long as you use the same for publishing the calibration -->
     <arg name="namespace_prefix" value="my_eih_calib"/>
