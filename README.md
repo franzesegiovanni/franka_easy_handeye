@@ -4,8 +4,14 @@ Movit free hand eye calibration for panda and fr3.
 I have tested the code using ROS noetic, a real panda robot and a realsense d435 camera.
 
 I am using the apriltag library to detect the apriltag in the camera image.
+## Installation of the controller on the computer connected to the robot
+Follow the instructions here ``` https://github.com/franzesegiovanni/franka_human_friendly_controllers ``` to install the controller on the computer connected to the robot.
 
-## Installation
+Run the controller before starting the calibration 
+```bash
+  roslaunch franka_human_friendly_controllers cartesian_variable_impedance_controller.launch robot_ip:=ROBOT_IP
+```
+## Installation on the comoputer connected to the camera
 ### Install the real sense camera
 ```bash
   sudo apt-get install ros-noetic-realsense2-camera  
