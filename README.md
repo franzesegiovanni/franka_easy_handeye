@@ -26,7 +26,8 @@ Run the controller before starting the calibration
   git clone --depth 1 https://github.com/AprilRobotics/apriltag.git  
   git clone --depth 1 https://github.com/AprilRobotics/apriltag_ros.git 
   git clone --depth 1 https://github.com/IFL-CAMP/easy_handeye.git                         
-  git clone --depth 1 https://github.com/franzesegiovanni/franka_easy_handeye.git  
+  git clone --depth 1 https://github.com/franzesegiovanni/franka_easy_handeye.git
+  git clone --depth 1 https://github.com/platonics-delft/panda-ros-py.git
   cd ..   
   catkin build 
   source devel/setup.bash  
