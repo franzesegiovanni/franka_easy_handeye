@@ -31,6 +31,9 @@ Run the controller before starting the calibration
   catkin build 
   source devel/setup.bash  
 ```
+
+# Print, measure and place the marker on the table in front of the robot.
+Print the pdf file marker.pdf. 
 # Run the calibration
 ``` bash
   roslaunch franka_easy_handeye easy.launch  
