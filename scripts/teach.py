@@ -14,6 +14,7 @@ import rospkg
 class Teach(Panda):
     def __init__(self):
         rospy.init_node('Calibration', anonymous=True)
+        super(Teach, self).__init__()
         self.r=rospy.Rate(10)
         self.recorded_traj = None 
         self.save_cartesian_position=None
@@ -40,7 +41,7 @@ class Teach(Panda):
         self.recorded_ori = self.curr_ori
         self.end=False
         print('Adding cartesian position') 
-        print('Recorded points: ', self.recorded_traj.shape[1])
+        print('Recorded points: ', 1)
         while not(self.end):       
             if  self.save_cartesian_position==True: 
                 self.recorded_traj = np.c_[self.recorded_traj, self.curr_pos]
@@ -78,12 +79,12 @@ class Teach(Panda):
             goal.pose.position.y = self.recorded_traj[1,i]
             goal.pose.position.z = self.recorded_traj[2,i]
 
-            goal.pose.orientation.x = self.recorded_ori[0,i]
-            goal.pose.orientation.y = self.recorded_ori[1,i]
-            goal.pose.orientation.z = self.recorded_ori[2,i]
-            goal.pose.orientation.w = self.recorded_ori[3,i]
+            goal.pose.orientation.w = self.recorded_ori[0,i]
+            goal.pose.orientation.x = self.recorded_ori[1,i]
+            goal.pose.orientation.y = self.recorded_ori[2,i]
+            goal.pose.orientation.z = self.recorded_ori[3,i]
 
-            self.goal_pub.publish(goal)
+            self.go_to_pose(goal)
 
             time.sleep(2)
             self.take_sample_pub.publish(Empty())
