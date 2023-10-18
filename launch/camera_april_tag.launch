@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <launch>
-  <arg name="launch_file_dir" default="./"/>
   <arg name="launch_prefix" default="" />
   <!-- configure camera input -->
   <arg name="camera_name" default="/camera" />
@@ -19,8 +18,8 @@
     <param name="queue_size" type="int" value="$(arg queue_size)" />
 
     <!-- load parameters (incl. tag family, tags, etc.) -->
-    <rosparam command="load" file="$(arg launch_file_dir)/../cfg/settings.yaml"/>
-    <rosparam command="load" file="$(arg launch_file_dir)/../cfg/tags.yaml"/>
+    <rosparam command="load" file="$(find franka_easy_handeye)/cfg/settings.yaml"/>
+    <rosparam command="load" file="$(find franka_easy_handeye)/cfg/tags.yaml"/>
   </node>
 
 </launch>
