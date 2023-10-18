@@ -69,6 +69,7 @@ class Teach(Panda):
         self.set_stiffness(600.0, 600.0, 600.0, 30.0, 30.0, 30.0, 0.0)
         for i in range (self.recorded_traj.shape[1]):
             print('Going to point number : ', i+1)
+            print('Careful, the point is recorded but the rqt reconfigure will not show it')
             goal = PoseStamped()
 
             goal.header.seq = 1
