@@ -18,7 +18,7 @@ Run the controller before starting the calibration
   cd calibration_ws 
   mkdir src
   cd src
-  git clone --branch ros-legacy1 https://github.com/IntelRealSense/realsense-ros.git
+  git clone --branch ros1-legacy https://github.com/IntelRealSense/realsense-ros.git
   git clone --depth 1 https://github.com/AprilRobotics/apriltag.git  
   git clone --depth 1 https://github.com/AprilRobotics/apriltag_ros.git 
   git clone --depth 1 https://github.com/IFL-CAMP/easy_handeye.git                         
