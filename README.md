@@ -33,7 +33,7 @@ Run the controller before starting the calibration
 Print the pdf file marker.pdf. 
 # Run the calibration
 ``` bash
-  roslaunch franka_easy_handeye easy.launch  
+  roslaunch franka_easy_handeye calibrate.launch  
 ```
 
 # Record trajectories in python
