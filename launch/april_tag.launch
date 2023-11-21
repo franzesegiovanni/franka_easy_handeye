@@ -6,8 +6,6 @@
   <arg name="image_topic" default="color/image_raw" />
   <arg name="queue_size" default="1" />
 
-  <include file="$(find realsense2_camera)/launch/rs_camera.launch" />
-
   <!-- apriltag_ros continuous detection node -->
   <node pkg="apriltag_ros" type="apriltag_ros_continuous_node" name="apriltag_ros_continuous_node" clear_params="true" output="screen" launch-prefix="$(arg launch_prefix)">
     <!-- Remap topics from those used in code to those on the ROS network -->
