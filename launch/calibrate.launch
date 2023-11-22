@@ -3,6 +3,8 @@
   <!-- (start your robot's MoveIt! stack, e.g. include its moveit_planning_execution.launch) -->
   <!-- (start your tracking system's ROS driver) -->
 
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
+  </include>
   <include file="$(find franka_easy_handeye)/launch/camera_april_tag.launch">
   </include>
   <include file="$(find easy_handeye)/launch/calibrate.launch">
