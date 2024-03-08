@@ -36,17 +36,4 @@ Print the pdf file marker.pdf.
   roslaunch franka_easy_handeye calibrate.launch  
 ```
 
-# Record trajectories in python
-``` bash
-  roscd franka_easy_handeye/scripts
-  python record_calibration_trajectories.py  
-```
-# Run the calibration in Python
-``` bash
-  roscd franka_easy_handeye/scripts
-  python execute_calibration.py
-```
-After the trajectory is over, remember to compute the transformation on the rqt gui.
-
-# Limitations
-The calibration was tested only with panda with realsense camera on the wrist. 
+Now, just make the robot compliant using the rqt reconfigure, and move the robot to a different position where you can see the marker in  front of the robot. When launching  the calibrate file, you have pop-up window that allows you to record the current pose and relative camera position. This is used later to compute the robot camera transformation.
