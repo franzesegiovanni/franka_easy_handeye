@@ -2,7 +2,10 @@
 Movit-free hand eye calibration for panda and fr3. 
 
 I have tested the code using ROS noetic, a real panda robot and a realsense d435 camera.
-
+If you are using a realsense, please install the driver using the command:
+```
+sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
+```
 I am using the apriltag library to detect the apriltag in the camera image.
 ## Installation of the controller on the computer connected to the robot
 Follow the instructions here ``` https://github.com/franzesegiovanni/franka_human_friendly_controllers ``` to install the controller on the computer connected to the robot.
