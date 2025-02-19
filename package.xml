@@ -2,7 +2,7 @@
 <package format="2">
   <name>franka_easy_handeye</name>
   <version>0.1.0</version>
-  <description>The box_localization package</description>
+  <description>Handeye calibration for franka using Easy_handeye package. We do not use moveit but move the robot ourself. We rely on realsense camera and AprilTag for the tag detection</description>
 
   <maintainer email="g.franzese@tudelf.nl">franzesegiovanni</maintainer>
 
@@ -16,5 +16,6 @@
   <depend>dynamic_reconfigure</depend>
   <build_depend>message_generation</build_depend>
   <exec_depend>message_runtime</exec_depend>
-	
+  <build_depend>ros-$ROS_DISTRO-realsense2-camera</build_depend>
+  <exec_depend>ros-$ROS_DISTRO-realsense2-camera</exec_depend>
 </package>

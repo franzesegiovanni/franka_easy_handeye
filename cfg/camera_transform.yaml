@@ -1,0 +1,13 @@
+camera_transform:
+  translation: 
+    x: 0.6988620971537185
+    y: 0.45173792934187584
+    z: 0.40093991730505885
+  rotation:
+    x: -0.22725227265798367
+    y: -0.8599839342967882
+    z: 0.4497704924678
+    w: 0.0805638965571569
+  parent_frame: "panda_link0"
+  child_frame: "camera_color_optical_frame"
+  rate: 100

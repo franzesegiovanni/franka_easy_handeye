@@ -2,6 +2,7 @@
 <launch>
   <!-- (start your robot's MoveIt! stack, e.g. include its moveit_planning_execution.launch) -->
   <!-- (start your tracking system's ROS driver) -->
+  <arg name="eye_on_base" default="false" />
 
   <include file="$(find realsense2_camera)/launch/rs_camera.launch">
       <arg name="enable_depth" value="false"/>
@@ -9,7 +10,7 @@
   <include file="$(find franka_easy_handeye)/launch/camera_april_tag.launch">
   </include>
   <include file="$(find easy_handeye)/launch/calibrate.launch">
-    <arg name="eye_on_hand" value="true"/>
+    <arg name="eye_on_hand" value="$(eval not arg('eye_on_base'))"/>
     <arg name="freehand_robot_movement" value="true" />
     <arg name="start_rviz" value="false" />
 
