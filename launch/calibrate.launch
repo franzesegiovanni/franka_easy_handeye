@@ -4,9 +4,9 @@
   <!-- (start your tracking system's ROS driver) -->
   <arg name="eye_on_base" default="false" />
 
-  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+  <!-- <include file="$(find realsense2_camera)/launch/rs_camera.launch">
       <arg name="enable_depth" value="false"/>
-  </include>
+  </include> -->
   <include file="$(find franka_easy_handeye)/launch/camera_april_tag.launch">
   </include>
   <include file="$(find easy_handeye)/launch/calibrate.launch">
