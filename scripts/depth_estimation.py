@@ -6,7 +6,8 @@ from cv_bridge import CvBridge
 import time
 import os
 import argparse
-import yaml
+import tf2_ros 
+import pickle
 #!/usr/bin/env python3
 
 class DepthEstimator:
@@ -21,7 +22,26 @@ class DepthEstimator:
         self.depth_sub = rospy.Subscriber('/camera/aligned_depth_to_color/image_raw', Image, self.depth_callback)
         self.rgb_sub = rospy.Subscriber('/camera/color/image_raw', Image, self.image_callback)
         self.camera_info_sub = rospy.Subscriber('/camera/aligned_depth_to_color/camera_info', CameraInfo, self.camera_info_callback)
+        self.camera_frame = "camera_color_optical_frame"
+        self.base_frame = "panda_link0"
 
+        self.tfBuffer = tf2_ros.Buffer()
+        self.transform_listener = tf2_ros.TransformListener(self.tfBuffer)
+        # self._tf_listener = tf2_ros.TransformListener(self.tfBuffer)
+    def read_transform(self):
+        try:
+            # Get the transform between the camera frame and the robot base frame
+            transform = self.tfBuffer.lookup_transform(self.base_frame, self.camera_frame, rospy.Time(0), rospy.Duration(2))
+            return transform
+        
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as e:
+            print(e)
+            # Create an identity transform if lookup fails
+            identity_transform = tf2_ros.TransformStamped()
+            identity_transform.header.frame_id = self.base_frame
+            identity_transform.child_frame_id = self.camera_frame
+            identity_transform.transform.rotation.w = 1.0  # Identity quaternion
+            return identity_transform
     def camera_info_callback(self, msg):
         self.cx = msg.K[2]
         self.cy = msg.K[5]
@@ -93,28 +113,61 @@ class DepthEstimator:
 
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
-        # Save the depth frames
-        #Save self.avg_depth_vis as jpg
+            
+        # Save RGB image and depth data separately for backward compatibility
         img_path = os.path.join(save_dir, f"{name}.jpg")
         cv2.imwrite(img_path, self.rgb_image)
-        #Save the depth value as numpy 
         depth_path = os.path.join(save_dir, f"{name}.npy")
         np.save(depth_path, self.avg_depth)
+        
         print("Dimension of the depth image is:", self.avg_depth.shape)
-        # Save the RGB image
         print("Dimension of the rgb image is:", self.rgb_image.shape)
-        rospy.loginfo(f"Saved depth data to {depth_path}")
-        # Save the camera intrinsic parameters as YAML file
-        camera_info = {
+        
+        # Get current transform of the camera
+        camera_transform = None
+        try:
+            # Create an empty pose to transform
+            camera_transform = self.read_transform()
+        except Exception as e:
+            rospy.logwarn(f"Failed to get camera transform: {e}. Is the robot running?")
+        
+        # Create a comprehensive object with all data
+        combined_data = {
+            'rgb_image': self.rgb_image,
+            'depth_image': self.avg_depth,
+            'camera_info': {
             "fx": self.fx,
             "fy": self.fy,
             "cx": self.cx,
             "cy": self.cy
+            },
+            'camera_transform': {
+                'translation': {
+                    'x': camera_transform.transform.translation.x,
+                    'y': camera_transform.transform.translation.y,
+                    'z': camera_transform.transform.translation.z
+                },
+                'rotation': {
+                    'x': camera_transform.transform.rotation.x,
+                    'y': camera_transform.transform.rotation.y,
+                    'z': camera_transform.transform.rotation.z,
+                    'w': camera_transform.transform.rotation.w
+                }
+            }
         }
-        camera_path = os.path.join(save_dir, f"camera_info.yaml")
-        with open(camera_path, 'w') as f:
-            yaml.dump(camera_info, f)
-        rospy.loginfo(f"Saved camera intrinsics to {camera_path}")
+        
+        # Save the combined object
+        save_path = os.path.join(save_dir, f"{name}.pkl")
+        with open(save_path, 'wb') as f:
+            pickle.dump(combined_data, f)
+        rospy.loginfo(f"Saved combined data to {save_path}")
+        
+        # # Save camera intrinsics as YAML for backward compatibility
+        # camera_path = os.path.join(save_dir, f"camera_info.yaml")
+        # with open(camera_path, 'w') as f:
+        #     yaml.dump(combined_data['camera_info'], f)
+        
+        rospy.loginfo(f"Saved data to {save_dir}")
 
 def main(name= 'test'):
     rospy.init_node('depth_estimator')
@@ -130,10 +183,10 @@ def main(name= 'test'):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Depth Estimation Node')
-    parser.add_argument('--name', type=str, default='test', help='Name for the recording')
+    parser.add_argument('--name', type=str, default='test2', help='Name for the recording')
     args = parser.parse_args()
     name = args.name
 
     # Set the name for the recording
-
+    print("Recording name is set to:", name)
     main(name)
